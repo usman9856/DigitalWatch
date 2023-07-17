@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm</title>
+    <link rel="stylesheet" href="Stopwatch.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="Dummy"></div>
+            <ul>
+                <li><a href="index.html">Current</a></li>
+                <li><a href="Stopwatch.html">Stop Watch</a></li>
+                <li><a href="Timer.html">Timer</a></li>
+                <li><a href="Alarm.html" style=" background-color: darkgrey">Alarm</a></li>
+                <li><span>Dark Mode <input type="range" name="DLM" id="Toggle" min="0" max="1" step="1" value="0" onclick="darkMode()"></span></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="set-input">
+                <input type="number" name="Hour"   id="hr2" placeholder="Hour"   >
+                <input type="number" name="minute" id="min2" placeholder="Minute">
+                <input type="number" name="second" id="sec2" placeholder="Second">
+            </div>
+            <div class="time_box">
+            <center><div id="time">00 : 00 : 00</div></center>
+        </div>
+        <div id="btn-oper-alarm">
+                <button id="pause" style="font-size:medium ;">Pause Alarm</button>
+                <button id="set"  style="font-size:medium ;">Set Alarm</button>
+                <button id="reset-al"style="font-size:medium ;">Remove Alarm</button>
+            </div>
+        </div>
+    </main>
+    
+</body>
+
+<script>
+    let alarmInterval;
+    let hr, min ,sec;
+    let hr2,min2,sec2;
+    let timeNow=document.getElementById("time");
+    let set= document.getElementById("set")    ;
+    let pause =document.getElementById("pause") ;
+    let reset= document.getElementById("reset");
+    alarmInterval = setInterval(getCurTime, 1000);
+    let hour2=document.getElementById("hr2");
+    let minute2=document.getElementById("min2");
+    let second2=document.getElementById("sec2");
+    let addZeroes = (num) => {
+        return num <10 ?`0${num}`:num; // if time value less tha 10 the it completes the digits of the clock
+    }
+   
+    set.addEventListener("click", ()=>{
+        hr2 =hour2.value;
+        min2=minute2.value;
+        sec2=second2.value;
+        sec2 == " " || sec2 == null ? sec2=0:sec2;
+        console.log(hr2,min2,sec2);//this code ensure that data is  being properly imported in the js
+        (hr2 >=0 &&hr2<=23&&sec2 >=0 &&sec2<=60&&min2 >=0 &&min2<=60 )? alert("Alarm Set."):alert("Invalid Paramenter!");
+    });
+    
+    pause.addEventListener("click", ()=>{
+    clearInterval(alarmInterval);
+    });
+
+    reset.addEventListener("click", ()=>{
+        clearInterval(alarmInterval);
+        hr = min= sec= 0;
+        timeNow.innerHTML = `${addZeroes(hr)} : ${addZeroes(min)} : ${addZeroes(sec)}`;
+        hour2.innerHTML.placeholder="Hour";
+        minute2.innerHTML.placeholder="Minute";
+        second2.innerHTML.placeholder="Second";
+    });
+    
+    function getCurTime() {
+        var  dateToday = new Date();
+        dateToday = new Date();//fetches the time first try to display
+        hr = addZeroes(dateToday.getHours());    //fetches hour
+        min= addZeroes(dateToday.getMinutes());  //fetches minutes
+        sec= addZeroes(dateToday.getSeconds()); //fetches second
+        if (hr == hr2 && sec == sec2 && min == min2) {
+            alert("Time Up Go do some shit!");
+            // reset.click();
+        }
+        timeNow.innerHTML = `${hr} : ${min} : ${sec}`;
+        }
+</script>
+
+</html>

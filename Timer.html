@@ -1,0 +1,118 @@
+<!-- It counts down from the set time -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch</title>
+    <link rel="stylesheet" href="Stopwatch.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="Dummy"></div>
+            <ul>
+                <li><a href="index.html">Current</a></li>
+                <li><a href="Stopwatch.html">Stop Watch</a></li>
+                <li><a href="Timer.html" style=" background-color: darkgrey">Timer</a></li>
+                <li><a href="Alarm.html">Alarm</a></li>
+                <li><span>Dark Mode <input type="range" name="DLM" id="Toggle" min="0" max="1" step="1" value="0" onclick="darkMode()"></span></li>
+            </ul>
+           
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="set-input">
+                <input type="number" name="Hour"   id="hr" placeholder="Hour"   >
+                <input type="number" name="minute" id="min" placeholder="Minute">
+                <input type="number" name="second" id="sec" placeholder="Second">
+            </div>
+            <div class="time_box">
+                <center><div id="time">00 : 00 : 00</div></center>
+            </div>
+            <div id="btn-oper">
+                <button id="stop" >stop</button>
+                <button id="start">start</button>
+                <button id="reset">reset</button>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    var hr =0;
+    var min=0;
+    var sec=0;
+    let BtnStart = document.getElementById("Start");
+    let BtnStop =  document.getElementById("Stop");
+    let BtnReset =  document.getElementById("Reset");
+    let CDtime = document.getElementById("time");
+    let countInterval ;
+
+    let addZeroes = (num) => {
+        return num <10 ?`0${num}`:num; // if time value less tha 10 the it completes the digits of the clock
+    }
+    
+    BtnStart.addEventListener('click' , ()=>{
+         hr =document.getElementById("hr").value;
+         min = document.getElementById("min").value;
+         sec = document.getElementById("sec").value;
+         time = hr*60*60;
+         time+=min*60;
+         time+=sec;
+         clearInterval(countInterval);
+        countInterval = setInterval(countDown,1000);
+    });
+
+    BtnStop.addEventListener("click", ()=>{
+        clearInterval(countInterval);
+    });
+
+    BtnReset.addEventListener("click",()=>{
+        clearInterval(countInterval);
+        hr=0,min=0,sec=0;
+        CDtime.innerHTML=`${addZeroes(hr)} : ${addZeroes(min)} : ${addZeroes(sec)}`;
+    });
+
+    function countDown()
+    {
+        if (hr <0||min<0||sec<0||hr >60||min>60||sec>60)
+        {
+            alert("Invalid Entry. Try again.");
+            hr=0,min=0,sec=0;
+            CDtime.innerHTML=`${addZeroes(hr)} : ${addZeroes(min)} : ${addZeroes(sec)}`;
+        }
+        else{   
+            if (sec>0)
+            {
+            sec--;
+            }
+            else if (sec==0)
+            {
+              
+                if (min>0 && hr==0)
+                {
+                    sec=59;
+                    min--;
+                }
+                else if (min>0 && hr>=0){
+                    hr--;
+                    min = 59;
+                    sec=59;
+                9
+                }
+                else if (hr == 0 && min ==0&& sec==0){
+                    alert("Time Over!");
+                    BtnReset.click();
+                }
+            }
+            CDtime.innerHTML=`${addZeroes(hr)} : ${addZeroes(min)} : ${addZeroes(sec)}`;
+        }
+        
+    }
+
+
+
+</script>
+</html>

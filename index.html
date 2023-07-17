@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current</title>
+    <link rel="stylesheet" href="Stopwatch.css">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="Dummy"></div>
+            <ul>
+                <li><a href="index.html" style=" background-color: darkgrey">Current</a></li>
+                <li><a href="Stopwatch.html">Stop Watch</a></li>
+                <li><a href="Timer.html">Timer</a></li>
+                <li><a href="Alarm.html">Alarm</a></li>
+                <li><a href="Test.html">Test</a></li>
+                <!-- <li><span>Dark Mode <input type="range" name="DLM" id="Toggle" min="0" max="1" step="1" value="0" onclick="darkMode()"></span></li> -->
+                <li><button id="d-mode">Dark Mode</button></li>
+                
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="time_box">
+                <center><div id="time">00 : 00 : 00</div></center>
+            </div>
+            <div>
+                <button id="btn-cur" onclick="getCurTime()">Get Time!</button>
+                <button id="btn-stp" style="background-color: red;" onclick="myStopFunction()">Stop!</button>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    let myInterval;
+    let STime = document.getElementById("btn-stp");
+    let timeNow=document.getElementById("time");
+    let GTime = document.getElementById("btn-cur");
+    let hr, min ,sec;
+    let dMode = document.getElementById("d-mode");
+    myInterval = setInterval(getCurTime, 1000);
+    
+    let addZeroes = (num) => {
+        return num <10 ?`0${num}`:num; // if time value less tha 10 the it completes the digits of the clock
+    }
+    GTime.addEventListener("click", ()=>{
+        myInterval = setInterval(getCurTime, 1000);
+    });
+
+    STime.addEventListener("click", ()=>{
+        clearInterval(myInterval);
+        hr = min= sec= 0;
+        timeNow.innerHTML = `${addZeroes(hr)} : ${addZeroes(min)} : ${addZeroes(sec)}`;
+    });
+   
+    function getCurTime() {
+        var  dateToday = new Date();
+        dateToday = new Date();//fetches the time first try to display
+        hr = addZeroes(dateToday.getHours());    //fetches hour
+        min= addZeroes(dateToday.getMinutes());  //fetches minutes
+        sec= addZeroes(dateToday.getSeconds()); //fetches second
+ timeNow.innerHTML = `${hr} : ${min} : ${sec}`;
+          
+}
+
+    dMode.addEventListener("click", ()=>{
+        darkMode();
+        
+    });
+
+
+// dToggle.addEventListener("click", ()=>{
+    
+// }
+// 
+    function darkMode()
+    {
+        document.getElementsByClassName("container").style.backgroundColor=black;
+                alert("Dark Mode");
+    }
+// 
+    
+    
+</script>
+</html>
